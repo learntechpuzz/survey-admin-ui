@@ -15,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
-import { authenticationService } from 'src/services/authentication.service';
+import AuthService from 'src/services/auth.service';
 import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
@@ -36,7 +36,7 @@ const TopBar = ({
   const navigate = useNavigate();
 
   function logout() {
-    authenticationService.logout();
+    AuthService.logout();
     navigate("/login", { replace: true });
   }
 

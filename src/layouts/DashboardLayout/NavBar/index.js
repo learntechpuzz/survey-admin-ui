@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { authenticationService } from 'src/services/authentication.service';
+import AuthService from 'src/services/auth.service';
 import {
   Avatar,
   Box,
@@ -18,27 +18,29 @@ import {
   Send as ResponsesIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+import { Role } from 'src/role';
 
-const currentUser = authenticationService.currentUserValue;
 const user = {
   avatar: '/static/images/avatars/user_avatar.svg'
 };
-
 const items = [
   {
     href: '/app/dashboard',
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: 'Dashboard',
+    roles: [Role.Admin, Role.Report, Role.User]
   },
   {
-    href: '/app/products',
+    href: '/app/surveys',
     icon: SurveysIcon,
-    title: 'Surveys'
+    title: 'Surveys',
+    roles: [Role.Admin, Role.User]
   },
   {
-    href: '/app/customers',
+    href: '/app/responses',
     icon: ResponsesIcon,
-    title: 'Responses'
+    title: 'Responses',
+    roles: [Role.Admin]
   }
 ];
 
@@ -61,8 +63,10 @@ const useStyles = makeStyles(() => ({
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
+    setCurrentUser(AuthService.getCurrentUser());
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
@@ -92,26 +96,22 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {currentUser.username}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {currentUser.roles}
+          {currentUser && currentUser.username}
         </Typography>
       </Box>
       <Divider />
       <Box p={2}>
         <List>
           {items.map((item) => (
+            currentUser && currentUser.roles && currentUser.roles.some(r => item.roles.includes(r)) === true &&
             <NavItem
               href={item.href}
               key={item.title}
               title={item.title}
               icon={item.icon}
             />
-          ))}
+          ))
+          }
         </List>
       </Box>
       <Box flexGrow={1} />

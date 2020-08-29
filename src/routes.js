@@ -2,28 +2,22 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
-import AccountView from 'src/views/account/AccountView';
 import CustomerListView from 'src/views/customer/CustomerListView';
 import DashboardView from 'src/views/reports/DashboardView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/product/ProductListView';
-import RegisterView from 'src/views/auth/RegisterView';
-import SettingsView from 'src/views/settings/SettingsView';
 import { PrivateRoute } from 'src/components/PrivateRoute';
 import { Role } from './role';
 
 const routes = [
   {
     path: 'app',
-    element: <DashboardLayout />,
+    element: <PrivateRoute roles={[Role.Admin, Role.Report, Role.User]} component={DashboardLayout} />,
     children: [
-      { path: 'account', element:  <PrivateRoute role={Role.Admin} component={AccountView} /> },
-      { path: 'customers', element: <CustomerListView /> },
-      { path: 'dashboard', element: <DashboardView /> },
-      { path: 'products', element: <ProductListView /> },
-      { path: 'settings', element: <SettingsView /> },
-      { path: '*', element: <Navigate to="/404" /> }
+      { path: 'dashboard', element: <PrivateRoute roles={[Role.Admin, Role.Report, Role.User]} component={DashboardView} /> },
+      { path: 'surveys', element: <PrivateRoute roles={[Role.Admin, Role.User]} component={ProductListView} /> },
+      { path: 'responses', element: <PrivateRoute roles={[Role.Admin]} component={CustomerListView} /> }
     ]
   },
   {
@@ -31,7 +25,6 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: 'login', element: <LoginView /> },
-      { path: 'register', element: <RegisterView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '/', element: <Navigate to="/login" /> },
       { path: '*', element: <Navigate to="/404" /> }

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Page from 'src/components/Page';
-import { authenticationService } from 'src/services/authentication.service';
+import AuthService from 'src/services/auth.service';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +28,7 @@ const LoginView = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authenticationService.currentUserValue) {
+    if (AuthService.getCurrentUser()) {
       navigate('/app/dashboard', { replace: true });
     }
   });
@@ -55,7 +55,7 @@ const LoginView = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={(values, actions) => {
-              authenticationService.login(values.username, values.password).then(
+              AuthService.login(values.username, values.password).then(
                 () => {
                   navigate('/app/dashboard', { replace: true });
                 },

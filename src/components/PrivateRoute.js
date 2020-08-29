@@ -1,22 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authenticationService } from 'src/services/authentication.service';
+import AuthService from 'src/services/auth.service';
 
 
-export const PrivateRoute = ({ component: Component, role, ...rest }) => {
+export const PrivateRoute = ({ component: Component, roles, ...rest }) => {
     const navigate = useNavigate();
-    console.log("Role:" + role);
-    const currentUser = authenticationService.currentUserValue;
-    console.log("User Roles: " + currentUser.roles);
+    const currentUser = AuthService.getCurrentUser();
+    console.log("Menu Roles: " + roles);
+    console.log("CurrentUser Roles: " + JSON.stringify(currentUser));
     if (!currentUser) {
         // not logged in so redirect to login page with the return url
         navigate("/login", { replace: true });
     }
     // check if route is restricted by role
-    if (role && currentUser.roles && !currentUser.roles.includes(role)) {
+    if (currentUser && currentUser.roles && roles && !currentUser.roles.some(r => roles.includes(r)) === true) {
         // role not authorised so redirect to home page
-        authenticationService.logout();
+        AuthService.logout();
         navigate("/login", { replace: true });
     }
+    
     return (<Component {...rest} />);
 }
