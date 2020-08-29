@@ -120,13 +120,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           }
         </List>
       </Box>
-      <Box flexGrow={1} />
-      <Box
-        p={2}
-        m={2}
-        bgcolor="background.dark"
-      >
-      </Box>
     </Box>
   );
 
