@@ -98,6 +98,12 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         >
           {currentUser && currentUser.username}
         </Typography>
+        <Typography
+          color="textSecondary"
+          variant="body2"
+        >
+          {currentUser && currentUser.roles}
+        </Typography>
       </Box>
       <Divider />
       <Box p={2}>
