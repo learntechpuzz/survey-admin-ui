@@ -5,6 +5,7 @@ export const handleResponse = (error) => {
         // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
         AuthService.logout();
     }
-    const errorMessage = error.message || error.statusText;
+    console.log(error.response);
+    const errorMessage = error.response.data.message || error.message || error.statusText;
     return Promise.reject(errorMessage);
 }
