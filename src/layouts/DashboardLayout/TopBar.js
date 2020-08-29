@@ -61,8 +61,8 @@ const TopBar = ({
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
-            <InputIcon onClick={() => logout()} />
+          <IconButton onClick={logout} color="inherit">
+            <InputIcon/>
           </IconButton>
         </Hidden>
         <Hidden lgUp>

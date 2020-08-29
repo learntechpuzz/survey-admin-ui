@@ -21,7 +21,7 @@ function login(username, password) {
         .then(response => {
             if (response.data.accessToken) {
                 localStorage.setItem("currentUser", JSON.stringify(response.data));
-                currentUserSubject.next(JSON.stringify(response.data));
+                currentUserSubject.next(response.data);
             }
             return response.data;
         })
