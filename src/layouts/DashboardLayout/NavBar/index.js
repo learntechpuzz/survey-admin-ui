@@ -15,7 +15,7 @@ import {
 import {
   BarChart as BarChartIcon,
   Layers as SurveysIcon,
-  Send as ResponsesIcon
+  Package as ReportsIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 import { Role } from 'src/role';
@@ -37,9 +37,9 @@ const items = [
     roles: [Role.Admin, Role.User]
   },
   {
-    href: '/app/responses',
-    icon: ResponsesIcon,
-    title: 'Responses',
+    href: '/app/reports',
+    icon: ReportsIcon,
+    title: 'Reports',
     roles: [Role.Admin]
   }
 ];

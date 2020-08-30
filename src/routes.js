@@ -17,7 +17,7 @@ const routes = [
     children: [
       { path: 'dashboard', element: <PrivateRoute roles={[Role.Admin, Role.Report, Role.User]} component={DashboardView} /> },
       { path: 'surveys', element: <PrivateRoute roles={[Role.Admin, Role.User]} component={ProductListView} /> },
-      { path: 'responses', element: <PrivateRoute roles={[Role.Admin]} component={CustomerListView} /> }
+      { path: 'reports', element: <PrivateRoute roles={[Role.Admin]} component={CustomerListView} /> }
     ]
   },
   {
